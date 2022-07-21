@@ -2,12 +2,9 @@ import 'package:be_mine/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-final navigatorKey = GlobalKey<NavigatorState>();
-
 void main() {
   runApp(GetMaterialApp(
     home: PageContainerView(),
-    navigatorKey: navigatorKey,
   ));
 }
 

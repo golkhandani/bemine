@@ -2,6 +2,7 @@ import 'package:be_mine/controllers/splash_controller.dart';
 import 'package:be_mine/controllers/theme_controller.dart';
 import 'package:be_mine/models/trip_model.dart';
 import 'package:be_mine/shared/constants.dart';
+import 'package:be_mine/shared/fake_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
@@ -11,77 +12,99 @@ import 'package:line_icons/line_icons.dart';
 
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 
-class MapContainer extends StatefulWidget {
-  const MapContainer({Key? key, this.markers = const []}) : super(key: key);
-  final List<Trip> markers;
+class MapContainerController extends GetxController
+    with GetTickerProviderStateMixin {
+  final MapController mapController = MapController();
 
-  @override
-  State<MapContainer> createState() => _MapContainerState();
+  // late List<Marker> markers = [];
+
+  // List<Shadow> mapIconDecoration(Color color) {
+  //   return [
+  //     BoxShadow(
+  //       blurRadius: 12.0,
+  //       color: color,
+  //     ),
+  //     BoxShadow(
+  //       blurRadius: 68.0,
+  //       color: color,
+  //     )
+  //   ];
+  // }
+
+  // Marker marker(Trip e) {
+  //   return Marker(
+  //     anchorPos: AnchorPos.align(AnchorAlign.center),
+  //     height: 50,
+  //     width: 50,
+  //     point: e.latLng,
+  //     builder: (ctx) => DecoratedIcon(
+  //       LineIcons.mapPin,
+  //       color: kPinColor,
+  //       size: 42.0,
+  //       shadows: mapIconDecoration(kPrimaryColor),
+  //     ),
+  //   );
+  // }
+
+  // @override
+  // void onInit() {
+  //   // TODO: implement onInit
+  //   print(isClosed);
+  //   print(initialized);
+  //   super.onInit();
+  //   // markers = tripList.map((e) => marker(e)).toList();
+  //   final SplashController sc = Get.put(SplashController());
+  //   final ThemeController theme = Get.put(ThemeController());
+  //   final PopupController _popupController = PopupController();
+  //   sc.addListener(() {
+  //     _animatedMapMove(sc.mapCenterItem.value, 15);
+  //   });
+  // }
+
+  // void _animatedMapMove(LatLng destLocation, double destZoom) {
+  //   final _latTween = Tween<double>(
+  //       begin: mapController.center.latitude, end: destLocation.latitude);
+  //   final _lngTween = Tween<double>(
+  //       begin: mapController.center.longitude, end: destLocation.longitude);
+  //   final _zoomTween = Tween<double>(begin: mapController.zoom, end: destZoom);
+  //   var controller = AnimationController(
+  //       duration: const Duration(milliseconds: 500), vsync: this);
+  //   Animation<double> animation =
+  //       CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
+  //   controller.addListener(() {
+  //     mapController.move(
+  //         LatLng(_latTween.evaluate(animation), _lngTween.evaluate(animation)),
+  //         _zoomTween.evaluate(animation));
+  //   });
+  //   animation.addStatusListener((status) {
+  //     if (status == AnimationStatus.completed) {
+  //       controller.dispose();
+  //     } else if (status == AnimationStatus.dismissed) {
+  //       controller.dispose();
+  //     }
+  //   });
+
+  //   controller.forward();
+  // }
+
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  // }
 }
 
-class _MapContainerState extends State<MapContainer>
-    with TickerProviderStateMixin {
-  final MapController mapController = MapController();
-  final SplashController sc = Get.put(SplashController());
+class MapContainer extends GetView<MapContainerController> {
+  // final MapContainerController mc = Get.put(MapContainerController());
   final ThemeController theme = Get.put(ThemeController());
-  late List<Marker> markers = [];
-  final PopupController _popupController = PopupController();
-  @override
-  void initState() {
-    super.initState();
-    markers = widget.markers.map((e) => marker(e)).toList();
-    sc.addListener(() {
-      _animatedMapMove(sc.mapCenterItem.value, 15);
-    });
-  }
-
-  Marker marker(Trip e) {
-    return Marker(
-      anchorPos: AnchorPos.align(AnchorAlign.center),
-      height: 50,
-      width: 50,
-      point: e.latLng,
-      builder: (ctx) => DecoratedIcon(
-        LineIcons.mapPin,
-        color: kPinColor,
-        size: 42.0,
-        shadows: mapIconDecoration(kPrimaryColor),
-      ),
-    );
-  }
-
-  void _animatedMapMove(LatLng destLocation, double destZoom) {
-    final _latTween = Tween<double>(
-        begin: mapController.center.latitude, end: destLocation.latitude);
-    final _lngTween = Tween<double>(
-        begin: mapController.center.longitude, end: destLocation.longitude);
-    final _zoomTween = Tween<double>(begin: mapController.zoom, end: destZoom);
-    var controller = AnimationController(
-        duration: const Duration(milliseconds: 500), vsync: this);
-    Animation<double> animation =
-        CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
-    controller.addListener(() {
-      mapController.move(
-          LatLng(_latTween.evaluate(animation), _lngTween.evaluate(animation)),
-          _zoomTween.evaluate(animation));
-    });
-    animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        controller.dispose();
-      } else if (status == AnimationStatus.dismissed) {
-        controller.dispose();
-      }
-    });
-
-    controller.forward();
-  }
+  final SplashController sc = Get.put(SplashController());
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         FlutterMap(
-          mapController: mapController,
+          mapController: controller.mapController,
           options: mapOptions(),
           // layers: const [
           //   MarkerLayerOptions(markers: markers),
@@ -146,7 +169,7 @@ class _MapContainerState extends State<MapContainer>
       maxClusterRadius: 120,
       rotate: true,
       size: const Size(100, 100),
-      markers: markers,
+      //markers: mc.markers,
       anchor: AnchorPos.align(AnchorAlign.center),
       fitBoundsOptions: const FitBoundsOptions(
         padding: EdgeInsets.all(50),
@@ -159,7 +182,6 @@ class _MapContainerState extends State<MapContainer>
       ),
       popupOptions: PopupOptions(
           popupSnap: PopupSnap.markerTop,
-          popupController: _popupController,
           popupBuilder: (_, marker) => Container(
                 width: 200,
                 height: 200,
@@ -192,19 +214,6 @@ class _MapContainerState extends State<MapContainer>
       },
     );
   }
-
-  List<Shadow> mapIconDecoration(Color color) {
-    return [
-      BoxShadow(
-        blurRadius: 12.0,
-        color: color,
-      ),
-      BoxShadow(
-        blurRadius: 68.0,
-        color: color,
-      )
-    ];
-  }
 }
 
 class MapButton extends StatelessWidget {
@@ -223,7 +232,7 @@ class MapButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         child: InkWell(
           hoverColor: Colors.orange,
-          splashColor: Colors.red,
+          splashColor: Colors.black,
           focusColor: Colors.yellow,
           highlightColor: Colors.amber,
           onTap: () {},
