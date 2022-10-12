@@ -1,24 +1,28 @@
 import 'package:be_mine/components/app/app_bar.dart';
 import 'package:be_mine/components/box/featured_box.dart';
 import 'package:be_mine/components/box/map_box.dart';
+import 'package:be_mine/components/card/featured_trip_card.dart';
 
 import 'package:be_mine/controllers/splash_controller.dart';
 import 'package:be_mine/controllers/theme_controller.dart';
+import 'package:be_mine/controllers/trip_list_controller.dart';
+import 'package:be_mine/shared/constants.dart';
+import 'package:be_mine/shared/fake_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class FeaturedPage extends StatelessWidget {
-  FeaturedPage({Key? key}) : super(key: key);
+class TripListPage extends StatelessWidget {
+  TripListPage({Key? key}) : super(key: key);
 
   final ThemeController theme = Get.put(ThemeController());
   final SplashController sc = Get.put(SplashController());
+  final TripListController tlc = Get.put(TripListController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: theme.scaffoldBackground.value,
       body: CustomScrollView(
-        physics: const NeverScrollableScrollPhysics(),
         slivers: [
           AppBarContainer(
             appBarWidget: Row(
@@ -50,23 +54,19 @@ class FeaturedPage extends StatelessWidget {
               ],
             ),
           ),
-          SliverFillRemaining(
-            hasScrollBody: false,
-            fillOverscroll: false,
-            child: Obx(
-              () => Container(
-                color: theme.scaffoldBackground.value,
-                child: Center(
-                  child: Column(
-                    children: [
-                      MapBox(),
-                      FeatureBox(),
-                    ],
-                  ),
-                ),
-              ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (_, int index) {
+                final trip = tlc.trips[index];
+                return Container(
+                  height: (logicalHeight / 2).floorToDouble(),
+                  padding: kLargeMargin,
+                  child: FeaturedTripCard(trip: trip),
+                );
+              },
+              childCount: tripListFake.length, // 1000 list items
             ),
-          )
+          ),
         ],
       ),
     );
