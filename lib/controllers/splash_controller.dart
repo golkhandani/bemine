@@ -1,3 +1,4 @@
+import 'package:be_mine/shared/fake_data.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -8,6 +9,8 @@ class SplashController extends GetxController {
 
   var kSplashScreenSpaceTitle = "Welcome to Be Mine";
 
+  var featuredPlaces = placeListFake;
+
   var itemIndex = 0.obs;
   changeItem(int index) {
     itemIndex.value = index;
@@ -16,6 +19,13 @@ class SplashController extends GetxController {
   }
 
   var mapCenterItem = LatLng(51.502, -0.09).obs;
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    mapCenterItem.value = placeListFake[itemIndex.value].latLng;
+  }
+
   //final MapController mapController = MapController();
   changemapCenterItem(LatLng latLng) {
     mapCenterItem.value = latLng;
@@ -26,11 +36,5 @@ class SplashController extends GetxController {
   increment() {
     count++;
     xName.value = xName.value == "Black" ? "White" : "Black";
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    // super.dispose();
   }
 }

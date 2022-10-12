@@ -1,22 +1,24 @@
-import 'package:be_mine/components/cached_tile_provider.dart';
+import 'dart:ui';
+
+import 'package:be_mine/components/map/cached_tile_provider.dart';
 import 'package:flutter/material.dart';
 
-var kPrimaryColor = const Color.fromARGB(255, 14, 3, 77);
-var kSecondaryColor = Colors.black;
-var kContrastColor = const Color.fromARGB(255, 211, 203, 183);
-var kPinColor = Colors.black;
-var kBackBtnColor = const Color.fromARGB(255, 255, 186, 57);
-var kMarginLarge = 16.0;
-var kMarginMedium = 8.0;
-var kMarginSmall = 4.0;
+const kPrimaryColor = Color.fromARGB(255, 14, 3, 77);
+const kSecondaryColor = Colors.black;
+const kContrastColor = Color.fromARGB(255, 211, 203, 183);
+const kPinColor = Colors.black;
+const kBackBtnColor = Color.fromARGB(255, 255, 186, 57);
+const kMarginLarge = 16.0;
+const kMarginMedium = 8.0;
+const kMarginSmall = 4.0;
 
 //"https://api.maptiler.com/maps/ch-swisstopo-lbm-dark/{z}/{x}/{y}.png?key=J4ktALZX8GCz9Hw7i0tK";
-var kPlaceholder =
+const kPlaceholder =
     "https://unsplash.com/photos/8IKf54pc3qk/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8NHx8Y2FmZXxlbnwwfHx8fDE2NDcwNTE1NTg&force=true&w=1920";
-var kTileLayerUrlSubdomain = ['a', 'b', 'c'];
-var kCachedTileLayer = const CachedTileProvider();
-var kRoundCorner = const BorderRadius.all(Radius.circular(25));
-var kBoxShadow = [
+const kTileLayerUrlSubdomain = ['a', 'b', 'c'];
+const kCachedTileLayer = const CachedTileProvider();
+const kRoundCorner = const BorderRadius.all(Radius.circular(25));
+const kBoxShadow = [
   BoxShadow(
     color: kPrimaryColor,
     spreadRadius: 2,
@@ -28,7 +30,7 @@ var kBoxShadow = [
     blurRadius: 4,
   )
 ];
-var kBackBtnShadow = const [
+const kBackBtnShadow = [
   BoxShadow(
     blurRadius: 12.0,
     color: Colors.white,
@@ -38,3 +40,21 @@ var kBackBtnShadow = const [
     color: Colors.white,
   )
 ];
+
+const kLargeMargin = EdgeInsets.all(kMarginLarge);
+const kMediumMargin = EdgeInsets.all(kMarginMedium);
+const kSmallMargin = EdgeInsets.all(kMarginSmall);
+const kBoxBorderWidth = 2.0;
+const kFeatureViewportFraction = 0.8;
+
+const kNavigationBarContainer = 88.0;
+const kAppBarContainer = 64;
+var pixelRatio = window.devicePixelRatio;
+var logicalScreenSize = window.physicalSize / pixelRatio;
+var logicalWidth = logicalScreenSize.width;
+var logicalHeight = logicalScreenSize.height -
+    kNavigationBarContainer -
+    kAppBarContainer -
+    kMarginLarge;
+
+var kblurFilter = ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0);
