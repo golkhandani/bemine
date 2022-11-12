@@ -1,114 +1,46 @@
-import 'package:be_mine/controllers/splash_controller.dart';
+import 'package:be_mine/controllers/featured_items_controller.dart';
 import 'package:be_mine/controllers/theme_controller.dart';
-import 'package:be_mine/models/trip_model.dart';
 import 'package:be_mine/shared/constants.dart';
-import 'package:be_mine/shared/fake_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:decorated_icon/decorated_icon.dart';
-import 'package:line_icons/line_icons.dart';
 
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 
-class MapContainerController extends GetxController
-    with GetTickerProviderStateMixin {
-  final MapController mapController = MapController();
+import '../controllers/map_controller.dart';
 
-  // late List<Marker> markers = [];
+class MapContainer extends StatefulWidget {
+  const MapContainer({Key? key}) : super(key: key);
 
-  // List<Shadow> mapIconDecoration(Color color) {
-  //   return [
-  //     BoxShadow(
-  //       blurRadius: 12.0,
-  //       color: color,
-  //     ),
-  //     BoxShadow(
-  //       blurRadius: 68.0,
-  //       color: color,
-  //     )
-  //   ];
-  // }
-
-  // Marker marker(Trip e) {
-  //   return Marker(
-  //     anchorPos: AnchorPos.align(AnchorAlign.center),
-  //     height: 50,
-  //     width: 50,
-  //     point: e.latLng,
-  //     builder: (ctx) => DecoratedIcon(
-  //       LineIcons.mapPin,
-  //       color: kPinColor,
-  //       size: 42.0,
-  //       shadows: mapIconDecoration(kPrimaryColor),
-  //     ),
-  //   );
-  // }
-
-  // @override
-  // void onInit() {
-  //   // TODO: implement onInit
-  //   print(isClosed);
-  //   print(initialized);
-  //   super.onInit();
-  //   // markers = tripList.map((e) => marker(e)).toList();
-  //   final SplashController sc = Get.put(SplashController());
-  //   final ThemeController theme = Get.put(ThemeController());
-  //   final PopupController _popupController = PopupController();
-  //   sc.addListener(() {
-  //     _animatedMapMove(sc.mapCenterItem.value, 15);
-  //   });
-  // }
-
-  // void _animatedMapMove(LatLng destLocation, double destZoom) {
-  //   final _latTween = Tween<double>(
-  //       begin: mapController.center.latitude, end: destLocation.latitude);
-  //   final _lngTween = Tween<double>(
-  //       begin: mapController.center.longitude, end: destLocation.longitude);
-  //   final _zoomTween = Tween<double>(begin: mapController.zoom, end: destZoom);
-  //   var controller = AnimationController(
-  //       duration: const Duration(milliseconds: 500), vsync: this);
-  //   Animation<double> animation =
-  //       CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
-  //   controller.addListener(() {
-  //     mapController.move(
-  //         LatLng(_latTween.evaluate(animation), _lngTween.evaluate(animation)),
-  //         _zoomTween.evaluate(animation));
-  //   });
-  //   animation.addStatusListener((status) {
-  //     if (status == AnimationStatus.completed) {
-  //       controller.dispose();
-  //     } else if (status == AnimationStatus.dismissed) {
-  //       controller.dispose();
-  //     }
-  //   });
-
-  //   controller.forward();
-  // }
-
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   super.dispose();
-  // }
+  @override
+  State<MapContainer> createState() => _MapContainerState();
 }
 
-class MapContainer extends GetView<MapContainerController> {
-  // final MapContainerController mc = Get.put(MapContainerController());
+class _MapContainerState extends State<MapContainer> {
   final ThemeController theme = Get.put(ThemeController());
+
   final SplashController sc = Get.put(SplashController());
+
+  late MapContainerController mcc;
+
+  @override
+  void initState() {
+    // This is some how a problem of working with FlutterMap and GetX
+    mcc = Get.put(MapContainerController());
+    mcc.mapController = MapController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         FlutterMap(
-          mapController: controller.mapController,
+          mapController: mcc.mapController,
           options: mapOptions(),
-          // layers: const [
-          //   MarkerLayerOptions(markers: markers),
-          // ],
+          layers: [
+            MarkerLayerOptions(markers: mcc.markers),
+          ],
           children: <Widget>[
             TileLayerWidget(
               options: tileLayerOptions(),
@@ -143,6 +75,7 @@ class MapContainer extends GetView<MapContainerController> {
   }
 
   MapOptions mapOptions() {
+    print("___ mapOptions: ${sc.mapCenterItem.value}");
     return MapOptions(
       center: sc.mapCenterItem.value,
       zoom: 15.0,

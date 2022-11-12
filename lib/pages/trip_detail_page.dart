@@ -28,7 +28,7 @@ class TripDetailPage extends StatelessWidget {
     final ThemeController theme = Get.find();
     return Scaffold(
         body: Container(
-      color: Colors.black,
+      color: theme.scaffoldBackground.value,
       child: CustomScrollView(
         slivers: [
           SliverFillRemaining(
@@ -179,50 +179,6 @@ class TripDetailPage extends StatelessWidget {
                                       ),
                                     )
                                   ]),
-                              // <GaugeAnnotation>[
-                              //   GaugeAnnotation(
-                              //     //horizontalAlignment: GaugeAlignment.center,
-                              //     verticalAlignment: GaugeAlignment.far,
-                              //     widget: Container(
-                              //       width: 64.00,
-                              //       height: 64.00,
-                              //       decoration: BoxDecoration(
-                              //         borderRadius:
-                              //             BorderRadius.circular(100),
-                              //         color: color,
-                              //       ),
-                              //       child: Center(
-                              //         child: Container(
-                              //           child: Text(
-                              //             scoreTitle,
-                              //             style: TextStyle(
-                              //               fontWeight: FontWeight.normal,
-                              //               fontSize: 12,
-                              //               color: Colors.black,
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ),
-                              //       // Padding(
-                              //       //   padding:
-                              //       //       EdgeInsets.fromLTRB(0, 8, 0, 0),
-                              //       //   child: Container(
-                              //       //     child: Text(
-                              //       //       scoreDisplay,
-                              //       //       style: TextStyle(
-                              //       //         fontWeight: FontWeight.bold,
-                              //       //         fontSize: 12,
-                              //       //         color: color,
-                              //       //       ),
-                              //       //     ),
-                              //       //   ),
-                              //       // ),
-                              //     ),
-                              //     angle: 270,
-                              //     positionFactor: 0.24,
-                              //   )
-                              // ],
-                              //   )
                             ],
                           ),
                         );
@@ -232,15 +188,23 @@ class TripDetailPage extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.all(kMarginLarge),
                     child: RichText(
-                      text: const TextSpan(
+                      text: TextSpan(
                         children: [
                           TextSpan(
                             text: 'Vancouver Walker ',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: theme.textColor.value,
+                            ),
                           ),
                           TextSpan(
-                              text:
-                                  ' Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'),
+                            text:
+                                ' Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: theme.textColor.value,
+                            ),
+                          ),
                         ],
                       ),
                     ),

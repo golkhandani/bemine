@@ -1,8 +1,11 @@
-import 'package:be_mine/pages/splash_page.dart';
+import 'package:be_mine/components/map_container.dart';
+import 'package:be_mine/pages/featured_items_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Get.put(MapContainerController());
   runApp(GetMaterialApp(
     home: PageContainerView(),
   ));
@@ -13,7 +16,7 @@ class PageContainerController extends GetxController {
   var pageControl = PageController(
     keepPage: true,
   ).obs;
-  var _pages = [
+  final _pages = [
     SizedBox.expand(
       child: Container(
         color: Colors.greenAccent,
@@ -32,12 +35,10 @@ class PageContainerController extends GetxController {
     )
   ];
   changePage(index) {
-    print("index: ${index}");
     if (pageControl.value.hasClients) {
       pageControl.value.jumpToPage(index);
       selectedPageNumber.value = index;
     }
-
     update();
   }
 }
@@ -59,10 +60,6 @@ class PageContainerView extends StatelessWidget {
               controller: pc.pageControl.value,
               itemCount: 4,
               itemBuilder: (ctx, i) {
-                print(pc.selectedPageNumber.value.toString());
-                if (i == 1) {
-                  SplashPage().createState();
-                }
                 return pc._pages[i];
               },
             ),

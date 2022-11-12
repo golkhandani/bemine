@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:be_mine/controllers/splash_controller.dart';
+import 'package:be_mine/controllers/featured_items_controller.dart';
 import 'package:be_mine/controllers/theme_controller.dart';
 import 'package:be_mine/shared/constants.dart';
 import 'package:flutter/material.dart';

@@ -11,26 +11,14 @@ class SplashController extends GetxController {
   var itemIndex = 0.obs;
   changeItem(int index) {
     itemIndex.value = index;
-    print(index);
+    print("___ changeItem index: $index");
     update();
   }
 
-  var mapCenterItem = LatLng(51.502, -0.09).obs;
-  //final MapController mapController = MapController();
+  var mapCenterItem = LatLng(51.502, -1.09).obs;
   changemapCenterItem(LatLng latLng) {
     mapCenterItem.value = latLng;
+    print("___ changemapCenterItem: ${mapCenterItem.value}");
     update();
-  }
-
-  var xName = "White".obs;
-  increment() {
-    count++;
-    xName.value = xName.value == "Black" ? "White" : "Black";
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    // super.dispose();
   }
 }

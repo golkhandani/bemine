@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:be_mine/components/header_bar.dart';
 import 'package:be_mine/components/map_container.dart';
-import 'package:be_mine/controllers/splash_controller.dart';
+import 'package:be_mine/controllers/featured_items_controller.dart';
 import 'package:be_mine/controllers/theme_controller.dart';
 import 'package:be_mine/custom_carousel_slider.dart';
 import 'package:be_mine/pages/trip_detail_page.dart';
@@ -14,32 +14,11 @@ import 'package:get/get.dart';
 import 'package:progressive_image/progressive_image.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class SplashPage extends StatefulWidget {
-  const SplashPage({Key? key}) : super(key: key);
+class SplashPage extends StatelessWidget {
+  SplashPage({Key? key}) : super(key: key);
 
-  @override
-  State<SplashPage> createState() => _SplashPageState();
-}
-
-class _SplashPageState extends State<SplashPage> {
   final ThemeController theme = Get.put(ThemeController());
   final SplashController sc = Get.put(SplashController());
-  @override
-  void initState() {
-    print(mounted);
-    if (!mounted) {
-      build(context);
-    }
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    print('dispose');
-    // TODO: implement dispose
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -249,11 +228,19 @@ class AppBar extends StatelessWidget {
     return SliverAppBar(
       floating: true,
       toolbarHeight: 32,
+      title: Center(
+        child: Text(
+          'Featured Paths!',
+          style: TextStyle(
+            color: theme.textColor.value,
+          ),
+        ),
+      ),
       shadowColor: kSecondaryColor,
       backgroundColor: theme.scaffoldBackground.value,
       elevation: 2,
       pinned: true,
-      flexibleSpace: const HeaderBar(),
+      // flexibleSpace: const HeaderBar(),
     );
   }
 }
