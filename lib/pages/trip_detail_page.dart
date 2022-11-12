@@ -104,7 +104,7 @@ class TripDetailPage extends StatelessWidget {
                               : mainWidget;
                         }),
                   ),
-                  Container(
+                  SizedBox(
                     width: 500,
                     height: 200,
                     child: ListView.separated(
@@ -113,7 +113,7 @@ class TripDetailPage extends StatelessWidget {
                       ),
                       scrollDirection: Axis.horizontal,
                       padding: EdgeInsets.all(kMarginLarge),
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: 6,
                       itemBuilder: (context, index) {
@@ -299,8 +299,8 @@ class TripDetailPage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
                                   child: Text(
                                     "Stop point title",
                                     style: TextStyle(
@@ -317,7 +317,7 @@ class TripDetailPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 42,
                   )
                 ],

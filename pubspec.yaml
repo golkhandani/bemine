@@ -47,6 +47,7 @@ dependencies:
   timelines: ^0.1.0
   syncfusion_flutter_gauges: ^20.3.56
   blurrycontainer: ^1.0.2
+  google_fonts: ^3.0.1
 
 dev_dependencies:
   flutter_test:

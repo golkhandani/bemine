@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:be_mine/components/header_bar.dart';
 import 'package:be_mine/components/map_container.dart';
 import 'package:be_mine/controllers/featured_items_controller.dart';
 import 'package:be_mine/controllers/theme_controller.dart';
@@ -130,7 +129,7 @@ class VerticalFeatureCarousel extends StatelessWidget {
                               left: 0,
                               right: 0,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                     bottomLeft: Radius.circular(25),
                                     bottomRight: Radius.circular(25)),
                                 child: Container(
@@ -142,7 +141,7 @@ class VerticalFeatureCarousel extends StatelessWidget {
                                       padding: const EdgeInsets.all(16.0),
                                       child: Text(
                                         "TRIP  " + itemIndex.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold),
@@ -187,30 +186,6 @@ class CarouselSliderIndicator extends StatelessWidget {
           activeDotColor: kSecondaryColor,
           strokeWidth: 1,
         ),
-      ),
-    );
-  }
-}
-
-class MapBox extends StatelessWidget {
-  const MapBox({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.width + 0,
-      // 1.2 * kMarginLarge,
-      decoration: BoxDecoration(
-        borderRadius: kRoundCorner,
-        color: Colors.black,
-      ),
-      padding: EdgeInsets.all(kMarginSmall - 2),
-      margin: EdgeInsets.all(kMarginLarge),
-      child: ClipRRect(
-        borderRadius: kRoundCorner,
-        child: MapContainer(),
       ),
     );
   }

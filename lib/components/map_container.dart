@@ -9,6 +9,30 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 
 import '../controllers/map_controller.dart';
 
+class MapBox extends StatelessWidget {
+  const MapBox({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.width + 0,
+      // 1.2 * kMarginLarge,
+      decoration: BoxDecoration(
+        borderRadius: kRoundCorner,
+        color: Colors.black,
+      ),
+      padding: EdgeInsets.all(kMarginSmall - 2),
+      margin: EdgeInsets.all(kMarginLarge),
+      child: ClipRRect(
+        borderRadius: kRoundCorner,
+        child: const MapContainer(),
+      ),
+    );
+  }
+}
+
 class MapContainer extends StatefulWidget {
   const MapContainer({Key? key}) : super(key: key);
 
@@ -75,7 +99,6 @@ class _MapContainerState extends State<MapContainer> {
   }
 
   MapOptions mapOptions() {
-    print("___ mapOptions: ${sc.mapCenterItem.value}");
     return MapOptions(
       center: sc.mapCenterItem.value,
       zoom: 15.0,
@@ -114,18 +137,19 @@ class _MapContainerState extends State<MapContainer> {
         borderStrokeWidth: 3,
       ),
       popupOptions: PopupOptions(
-          popupSnap: PopupSnap.markerTop,
-          popupBuilder: (_, marker) => Container(
-                width: 200,
-                height: 200,
-                color: Colors.white,
-                child: GestureDetector(
-                  onTap: () => debugPrint('Popup tap!'),
-                  child: Text(
-                    'Container popup for marker at ${marker.point}',
-                  ),
-                ),
-              )),
+        popupSnap: PopupSnap.markerTop,
+        popupBuilder: (_, marker) => Container(
+          width: 200,
+          height: 200,
+          color: Colors.white,
+          child: GestureDetector(
+            onTap: () => debugPrint('Popup tap!'),
+            child: Text(
+              'Container popup for marker at ${marker.point}',
+            ),
+          ),
+        ),
+      ),
       builder: (context, markers) {
         return Container(
           decoration:
